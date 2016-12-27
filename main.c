@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:17:48 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/27 16:00:45 by aemilien         ###   ########.fr       */
+/*   Updated: 2016/12/27 16:15:15 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		main()
 		error("error malloc");
 	env->image->img = mlx_new_image(env->mlx, 1900, 1080);
 	fill_image(env->image, 1900, 1080, split_color(mlx_get_color_value(env->mlx, 0x00CC33FF)));
+	julia_set(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->image->img, 0, 0);
 	mlx_key_hook(env->win, &event, env);
 	mlx_loop(env->mlx);

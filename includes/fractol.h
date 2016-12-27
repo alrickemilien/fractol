@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/17 09:00:51 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/27 15:59:28 by aemilien         ###   ########.fr       */
+/*   Updated: 2016/12/27 16:24:08 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 # include <math.h>
 # define Y 1080
 # define X 1980
+
+typedef struct	s_z
+{
+	double	re;
+	double	im;
+}				t_z;
 
 typedef struct	s_image
 {
