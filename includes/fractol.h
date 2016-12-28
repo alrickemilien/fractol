@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/17 09:00:51 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/28 15:47:23 by aemilien         ###   ########.fr       */
+/*   Updated: 2016/12/28 19:10:44 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <math.h>
-# define WIN_WIDTH 500
-# define WIN_HEIGHT 500
+# define WIN_WIDTH 600
+# define WIN_HEIGHT 600
 
 typedef struct	s_z
 {
@@ -55,7 +55,9 @@ typedef	struct	s_env
 	void		*mlx;
 	void		*win;
 	t_image		*image;
+	t_z			constante;
 	t_point		cursor;
+	int			max_iter;
 }				t_env;
 
 int		error(char *str);
@@ -65,5 +67,6 @@ void	put_pixel_to_image(t_image *image, int x, int y, t_color color);
 t_color	split_color(unsigned long color);
 void	fill_image(t_image *image, int width, int height, t_color color);
 void	julia_set(t_env *env);
+void	mandelbrot_set(t_env *env);
 
 #endif

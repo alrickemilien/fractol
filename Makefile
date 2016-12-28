@@ -6,7 +6,7 @@
 #    By: aemilien <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/26 13:27:27 by aemilien          #+#    #+#              #
-#    Updated: 2016/12/28 11:39:16 by aemilien         ###   ########.fr        #
+#    Updated: 2016/12/28 19:10:31 by aemilien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INCLUDE= -I include
 
 FRAMEWORK= -framework OpenGL -framework AppKit
 
-SRC= main.c event.c error.c split_color.c put_pixel_to_image.c fill_image.c julia_set.c
+SRC= main.c event.c error.c split_color.c put_pixel_to_image.c fill_image.c julia_set.c mandelbrot_set.c
 
 OBJ=$(SRCS:.c=.o)
 

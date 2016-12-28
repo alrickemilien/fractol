@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:17:48 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/28 15:50:54 by aemilien         ###   ########.fr       */
+/*   Updated: 2016/12/28 19:09:59 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int		main()
 	env->image->zoom = 1;
 	env->cursor.x = 0;
 	env->cursor.y = 0;
-	julia_set(env);
+	env->max_iter = 50;
+	//julia_set(env);
+	mandelbrot_set(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->image->img, 0, 0);
 	mlx_key_hook(env->win, &key_hook, env);
 	mlx_hook(env->win, 6, 0, &mouse_motion_hook, env);
