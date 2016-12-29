@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel_to_image.c                               :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/27 14:15:38 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/29 14:50:52 by aemilien         ###   ########.fr       */
+/*   Created: 2016/11/16 17:37:12 by aemilien          #+#    #+#             */
+/*   Updated: 2016/11/19 18:13:47 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "libft.h"
 
-void	put_pixel_to_image(t_image *image, int x, int y, t_color color)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int		line;
-	int		colonne;
-	
-	line = y * image->size_line;
-	colonne = x * image->bits_per_pixel  / 8;
-	
+	int		m;
 
-	image->data[line + colonne] = color.red;
-	image->data[line + colonne + 1] = color.green;
-	image->data[line + colonne + 2] = color.blue;
+	if (n < 0)
+		ft_putchar_fd('-', fd);
+	m = 1;
+	while ((n / m) >= 10 || n / m <= -10)
+		m *= 10;
+	while (m >= 1)
+	{
+		if (n < 0)
+			ft_putchar_fd(-((n / m) % 10) + 48, fd);
+		if (n > 0)
+			ft_putchar_fd((n / m) % 10 + 48, fd);
+		if (n == 0)
+			ft_putchar_fd(48, fd);
+		m = m / 10;
+	}
 }

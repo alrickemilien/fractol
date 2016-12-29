@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel_to_image.c                               :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/27 14:15:38 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/29 14:50:52 by aemilien         ###   ########.fr       */
+/*   Created: 2016/11/16 17:34:19 by aemilien          #+#    #+#             */
+/*   Updated: 2016/12/05 17:00:33 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "libft.h"
 
-void	put_pixel_to_image(t_image *image, int x, int y, t_color color)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		line;
-	int		colonne;
-	
-	line = y * image->size_line;
-	colonne = x * image->bits_per_pixel  / 8;
-	
+	char	*new_str;
+	int		i;
+	int		j;
 
-	image->data[line + colonne] = color.red;
-	image->data[line + colonne + 1] = color.green;
-	image->data[line + colonne + 2] = color.blue;
+	new_str = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
+	if (!new_str)
+		return (NULL);
+	j = 0;
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		new_str[j] = s1[i];
+		i++;
+		j++;
+	}
+	i = 0;
+	while (s2[i] != '\0')
+	{
+		new_str[j] = s2[i];
+		i++;
+		j++;
+	}
+	return (new_str);
 }

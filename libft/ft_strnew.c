@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel_to_image.c                               :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/27 14:15:38 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/29 14:50:52 by aemilien         ###   ########.fr       */
+/*   Created: 2016/11/19 18:06:19 by aemilien          #+#    #+#             */
+/*   Updated: 2016/11/29 18:42:17 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "libft.h"
 
-void	put_pixel_to_image(t_image *image, int x, int y, t_color color)
+char	*ft_strnew(size_t size)
 {
-	int		line;
-	int		colonne;
-	
-	line = y * image->size_line;
-	colonne = x * image->bits_per_pixel  / 8;
-	
+	char		*str;
 
-	image->data[line + colonne] = color.red;
-	image->data[line + colonne + 1] = color.green;
-	image->data[line + colonne + 2] = color.blue;
+	str = (char*)ft_memalloc(sizeof(char) * (size + 1));
+	if (str)
+		return (str);
+	return (NULL);
 }

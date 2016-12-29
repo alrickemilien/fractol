@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel_to_image.c                               :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/27 14:15:38 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/29 14:50:52 by aemilien         ###   ########.fr       */
+/*   Created: 2016/11/16 17:34:32 by aemilien          #+#    #+#             */
+/*   Updated: 2016/11/19 18:05:15 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "libft.h"
 
-void	put_pixel_to_image(t_image *image, int x, int y, t_color color)
+char	*ft_strncpy(char *dest, const char *src, size_t size)
 {
-	int		line;
-	int		colonne;
-	
-	line = y * image->size_line;
-	colonne = x * image->bits_per_pixel  / 8;
-	
+	size_t		i;
 
-	image->data[line + colonne] = color.red;
-	image->data[line + colonne + 1] = color.green;
-	image->data[line + colonne + 2] = color.blue;
+	if (size < ft_strlen(src))
+		return ((char*)ft_memcpy((void*)dest, (void*)src, size));
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < size)
+	{
+		dest[i] = 0;
+		i++;
+	}
+	return (dest);
 }

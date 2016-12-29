@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_pixel_to_image.c                               :+:      :+:    :+:   */
+/*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/27 14:15:38 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/29 14:50:52 by aemilien         ###   ########.fr       */
+/*   Created: 2016/11/16 17:46:13 by aemilien          #+#    #+#             */
+/*   Updated: 2016/11/19 18:03:50 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "libft.h"
 
-void	put_pixel_to_image(t_image *image, int x, int y, t_color color)
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	int		line;
-	int		colonne;
-	
-	line = y * image->size_line;
-	colonne = x * image->bits_per_pixel  / 8;
-	
+	int		i;
+	char	*new_str;
 
-	image->data[line + colonne] = color.red;
-	image->data[line + colonne + 1] = color.green;
-	image->data[line + colonne + 2] = color.blue;
+	if (s == NULL || f == NULL)
+		return (NULL);
+	new_str = ft_strnew(ft_strlen(s));
+	if (new_str != NULL)
+	{
+		i = 0;
+		while (s[i] != '\0')
+		{
+			new_str[i] = (char)f(s[i]);
+			i++;
+		}
+		return (new_str);
+	}
+	return (new_str);
 }

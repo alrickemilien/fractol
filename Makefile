@@ -6,13 +6,15 @@
 #    By: aemilien <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/26 13:27:27 by aemilien          #+#    #+#              #
-#    Updated: 2016/12/28 19:10:31 by aemilien         ###   ########.fr        #
+#    Updated: 2016/12/29 16:08:36 by aemilien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CCFLAGS= -Wall -Wextra -Werror -o
+CCFLAGS= -Wall -Wextra -Werror  -O3 -o
 
 LIBFT= -lft -L libft -I libft
+
+LPTHREAD= -lpthread
 
 LIBMLX= -lmlx -L minilibx_macos -I minilibx_macos
 
@@ -20,7 +22,7 @@ INCLUDE= -I include
 
 FRAMEWORK= -framework OpenGL -framework AppKit
 
-SRC= main.c event.c error.c split_color.c put_pixel_to_image.c fill_image.c julia_set.c mandelbrot_set.c
+SRC= main.c event.c error.c split_color.c put_pixel_to_image.c fill_image.c julia_set.c mandelbrot_set.c third_set.c
 
 OBJ=$(SRCS:.c=.o)
 
@@ -29,10 +31,10 @@ NAME=fractol
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@gcc $(INCLUDE) $(CCFLAGS) $@ $(SRC) $(LIBFT) $(LIBMLX) $(FRAMEWORK)
+	@gcc $(INCLUDE) $(CCFLAGS) $@ $(SRC) $(LIBFT) $(LIBMLX) $(LPTHREAD) $(FRAMEWORK)
 
 %.o:%.c
-	@gcc $(INCLUDE) $(CCFLAGS) $@ -c $< $(LIBFT) $(LIBMLX)
+	@gcc $(INCLUDE) $(CCFLAGS) $@ -c $< $(LIBFT) $(LPTHREAD) $(LIBMLX)
 
 clean:
 	@rm -rf $(OBJ)
