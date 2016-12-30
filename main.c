@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:17:48 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/29 16:36:43 by aemilien         ###   ########.fr       */
+/*   Updated: 2016/12/30 19:53:28 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ void	threads(t_env *env)
 		(tmp + i)->max_iter = env->max_iter;
 		(tmp + i)->thread_index = i;
 		(tmp + i)->offset = env->offset;
-		if((pthread_create(&(pthread[i]), NULL, &mandelbrot_set, tmp + i)))
+		(tmp + i)->thread_origin.y = (i % 2) * WIN_HEIGHT_HALF;
+		if (i < 2)
+			(tmp + i)->thread_origin.x = 0;
+		else
+			(tmp + i)->thread_origin.x = WIN_WIDTH_HALF;
+		if((pthread_create(&(pthread[i]), NULL, &julia_set, tmp + i)))
 			error("error pthread_create");
 		i++;
 	}
@@ -57,16 +62,23 @@ int		main()
 		error("error malloc");
 	env->image->img = mlx_new_image(env->mlx, WIN_WIDTH, WIN_HEIGHT);
 	env->image->data = mlx_get_data_addr(env->image->img, &(env->image->bits_per_pixel), &(env->image->size_line), &(env->image->endian));
+	env->lock = 0;
 	env->image->zoom = 1;
 	env->cursor.x = 0;
 	env->cursor.y = 0;
 	env->max_iter = 250;
 	env->offset.x = 0;
 	env->offset.y = 0;
+	env->center.x = WIN_WIDTH_HALF;
+	env->center.y = WIN_HEIGHT_HALF;
+	env->dimension_menu.x = WIN_WIDTH;
+	env->dimension_menu.y = WIN_HEIGHT / 10;
 	threads(env);
 	mlx_put_image_to_window(env->mlx, env->win, env->image->img, 0, 0);
-	mlx_key_hook(env->win, &key_hook, env);
 	mlx_hook(env->win, 6, 1L<<6, &mouse_motion_hook, env);
+	mlx_hook(env->win, 3, 1L<<1 , &key_release, env);
+	mlx_hook(env->win, 2, 1L<<0 | (1<<1), &key_press, env);
+	mlx_hook(env->win, 4, 0L, &focus_in, env);
 	mlx_loop(env->mlx);
 	return (0);
 }

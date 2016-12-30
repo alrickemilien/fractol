@@ -18,22 +18,22 @@ void	*julia_set(void *void_env)
 	t_env	*env;
 
 	env = (t_env*)void_env;
-	env->constante.re = (env->cursor.x - WIN_WIDTH / 2) * 0.0015;
-	env->constante.im = (env->cursor.y - WIN_HEIGHT / 2) * 0.0015;
+	env->constante.re = (env->cursor.x - WIN_WIDTH_HALF) * 0.0015;
+	env->constante.im = (env->cursor.y - WIN_HEIGHT_HALF) * 0.0015;
 //	printf("Re :%lf\nIm : %lf\n\n", env->constante.re, env->constante.im);
 //	printf("Voici mon index de thread %d : \n", env->thread_index);
-	y = 0;
-	while(y < WIN_HEIGHT)
+	y = env->thread_origin.y;
+	while(y < env->thread_origin.y + WIN_HEIGHT_HALF)
 	{
-		x = env->thread_index * WIN_WIDTH / 4;
-		while(x < env->thread_index * WIN_WIDTH / 4 + WIN_WIDTH / 4)
+		x = env->thread_origin.x;
+		while(x < env->thread_origin.x + WIN_WIDTH_HALF)
 		{
-			new.re = ((double)(3 * (x - WIN_WIDTH / 2))) / ((double)(env->image->zoom * WIN_WIDTH));
-			new.im = (double)(2 * (y - WIN_HEIGHT / 2)) / ((double)(env->image->zoom * WIN_HEIGHT));
+			new.re = ((double)(3 * (x - WIN_WIDTH_HALF))) / ((double)(env->image->zoom * WIN_WIDTH)) + env->offset.x;
+			new.im = (double)(2 * (y - WIN_HEIGHT_HALF)) / ((double)(env->image->zoom * WIN_HEIGHT)) + env->offset.y;
 			n = 0;
 			color = 0x00FFFFFF;
 			while (n < env->max_iter && ft_module(new) <= 4)
-			{	
+			{
 				old.re = new.re;
 				old.im = new.im;
 				new.re = old.re * old.re - old.im * old.im + env->constante.re;
