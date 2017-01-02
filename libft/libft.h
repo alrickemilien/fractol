@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 18:16:49 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/16 20:21:29 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/02 08:54:29 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+char			*ft_ltoa(long nbr);
+char			*ft_dtoa(double nbr);
 int				get_next_line(int fd, char **line);
 void			*ft_memset(void *s, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
