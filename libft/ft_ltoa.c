@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 08:54:59 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/02 09:00:28 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/02 09:10:53 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_nbrlen(long n)
 {
 	int		len;
 
-	if (n == -9223372036854775808)
+	if (n == -2147483648)
 		return (20);
 	len = 0;
 	if (!n)
@@ -39,8 +39,8 @@ char		*ft_ltoa(long n)
 	char	*s;
 	size_t	len;
 
-	if (n == -9223372036854775808)
-		return (ft_strdup("-9223372036854775808"));
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
 	len = ft_nbrlen(n) + 1;
 	if (!(s = (char*)malloc(sizeof(char) * len)))
 		return (NULL);
