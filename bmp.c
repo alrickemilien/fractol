@@ -1,21 +1,28 @@
 #include "includes/fractol.h"
+#include <stdio.h>
+#include <errno.h>
+#include <sys/stat.h>
 
 void	set_bitmapfileheader(int fd, t_image *image)
 {
-	char	*header;
-	int		file_size;
-	char	*tmp;
+	unsigned char	*header;
+	unsigned int		file_size;
+	unsigned char	*tmp;
+	int		i;
+	unsigned char c;
+	int ret;
 
-	header = (char*)malloc(sizeof(char) * 14);
+	header = (unsigned char*)malloc(sizeof(unsigned char) * 14);
 	ft_bzero(header, 14);
 	header[0] = 0x42;
 	header[1] = 0x4D;
 	file_size = image->size_line * image->height;
-	tmp = (char*)&tmp;
-	header[2] = tmp[0];
-	header[3] = tmp[1];
-	header[4] = tmp[2];
-	header[5] = tmp[3];
+	tmp = (unsigned char*)&file_size;
+	printf("tmp[1] %x\n\n", tmp[2]);
+	header[2] = tmp[3];
+	header[3] = tmp[2];
+	header[4] = tmp[1];
+	header[5] = tmp[0];
 /*
  * offset : Adresse de la zone de définition de l’image
  */
@@ -23,7 +30,25 @@ void	set_bitmapfileheader(int fd, t_image *image)
 	//header[11] = 0;
 	//header[12] = 0;
 	//header[13] = 0;
-	write(fd, header, 14);
+	i = 0;
+	while (i < 6)
+	{
+		c= header[i];
+		printf("%X\n", c);
+		i++;
+	}
+	ret = write(fd, header, 14);
+	/*printf("ret : %d\n", ret);
+	close (fd);
+	fd = open("screenshot.bmp", O_RDWR);
+	i = 0;
+	while (read(fd, &c, 1) && i < 14)
+	{
+		printf("%X\n", c);
+		i++;
+	}*/
+	perror("write error");
+	ft_putchar('\n');
 }
 
 void	set_bitmapinfoheader(int fd, t_image *image)
@@ -39,25 +64,25 @@ void	set_bitmapinfoheader(int fd, t_image *image)
 
 	n = image->width;
 	tmp = (char*)&n;
-	header[4] = tmp[1];
+	header[4] = tmp[3];
 	header[5] = tmp[2];
-	header[6] = tmp[3];
-	header[7] = tmp[4];
+	header[6] = tmp[1];
+	header[7] = tmp[0];
 	
 	n = image->height;
 	tmp = (char*)&n;
-	header[8] = tmp[1];
+	header[8] = tmp[3];
 	header[9] = tmp[2];
-	header[10] = tmp[3];
-	header[11] = tmp[4];
+	header[10] = tmp[1];
+	header[11] = tmp[0];
 
 	header[12] = 0x01;
 	//header[13] = 0;
 	
 	n = image->bits_per_pixel;
 	tmp = (char*)&n;
-	header[14] = tmp[0];
-	header[15] = tmp[1];
+	header[14] = tmp[1];
+	header[15] = tmp[0];
 
 /*compression
 	header[16]
@@ -67,20 +92,20 @@ void	set_bitmapinfoheader(int fd, t_image *image)
 */	
 	n = image->size_line * image->height;
 	tmp = (char*)&n;
-	header[20] = tmp[0];
-	header[21] = tmp[1];
-	header[22] = tmp[2];
-	header[23] = tmp[3];
+	header[20] = tmp[3];
+	header[21] = tmp[2];
+	header[22] = tmp[1];
+	header[23] = tmp[0];
 
-	header[24] = 0;
-	header[25] = 0;
-	header[26] = 0x30;
-	header[27] = 0xB1;
+	header[24] = 0xC3;
+	header[25] = 0x0E;
+	header[26] = 0;
+	header[27] = 0;
 
-	header[28] = 0;
-	header[29] = 0;
-	header[30] = 0x30;
-	header[31] = 0xB1;
+	header[28] = 0xC3;
+	header[29] = 0x0E;
+	header[30] = 0;
+	header[31] = 0;
 
 	//header[32]
 	//header[33]
@@ -104,7 +129,7 @@ void	set_bitmapdata(int fd, t_image *image)
 
 	bitmap = (char*)malloc(sizeof(char) * image->size_line * image->height);
 	ft_bzero(bitmap, sizeof(char) * image->size_line * image->height);
-	y = image->height;
+	y = image->height - 1;
 	i = 0;
 	while (y >= 0)
 	{
@@ -117,6 +142,7 @@ void	set_bitmapdata(int fd, t_image *image)
 			bitmap[i + 1] = image->data[line + colonne + 1];
 			bitmap[i + 2] = image->data[line + colonne + 2];
 			i += 3;
+			x++;
 		}
 		y--;
 	}
@@ -126,9 +152,20 @@ void	set_bitmapdata(int fd, t_image *image)
 void	ft_bitmap(t_image *image)
 {
 	int		fd;
+	unsigned char	c;
+	int		i;
 
-	fd = open("screenshot.bmp", O_RDWR | O_EXCL | O_CREAT);
+	fd = open("screenshot.bmp", O_RDWR | O_EXCL | O_CREAT | O_NONBLOCK , S_ISCHR);
 	set_bitmapfileheader(fd, image);
 	set_bitmapinfoheader(fd, image);
 	set_bitmapdata(fd, image);
+	close (fd);
+	fd = open("screenshot.bmp", O_RDWR | O_NONBLOCK, S_ISCHR);
+	i = 0;
+	while (read(fd, &c, 1) && i < 14)
+	{
+		printf("%X\n", c);
+		i++;
+	}
+	ft_putendl("OK");
 }
