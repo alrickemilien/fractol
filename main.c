@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:17:48 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/05 18:25:16 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/05 18:28:52 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int		main(int argc, char **argv)
 	if(!(env = (t_env*)malloc(sizeof(t_env))))
 		error("error malloc");
 	if (!parse(env, argc, argv))
+	{
+		free(env);
 		error(USAGE);
+	}
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, WIN_WIDTH, WIN_HEIGHT, "fractol");
 	if(!(env->image = (t_image*)malloc(sizeof(t_image))))
