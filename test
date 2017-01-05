@@ -1,0 +1,5 @@
+exp(z3) = exp
+			 (a + ib) * (a + ib) * (a + ib)
+			= (a*a + 2iab - b*b) * (a + ib)	
+			= a*a*a + iab + 2ia*ab - 2ab*b - ab*b - ib*b*b
+			= a*a*a - 2ab*b - ab*b + i(ab + 2a*ab - b*b*b)
