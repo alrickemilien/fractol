@@ -36,7 +36,7 @@ void	*julia_set(void *void_env)
 				new.re = old.re * old.re - old.im * old.im + env->constante.re;
 				new.im = 2 * old.re * old. im + env->constante.im;
 				
-				color -= 10000;
+				color -= 8000;
 				if (ft_module(new) > 4)
 					break ;
 				n++;
