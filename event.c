@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 15:22:29 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/06 18:29:17 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/07 12:27:46 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,12 @@ void	redraw(void *env)
 
 int		mouse_motion_hook(int x, int y, void *env)
 {
-	printf("offset.x : %d\n", x);
-	printf("offset.y : %d\n", y);
 	if(x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT && !((t_env*)env)->lock)
 	{
 		((t_env*)env)->cursor.x = x;
 		((t_env*)env)->cursor.x = y;
-//	printf("x :%d\ny :%d\n\n", x, y);
 		((t_env*)env)->constante.re = (WIN_WIDTH_HALF - x)  * 0.001 - 0.7;
 		((t_env*)env)->constante.im = (WIN_HEIGHT_HALF - y) * 0.001 + 0.27015;
-
 		redraw(env);
 	}
 	return (0);
@@ -52,11 +48,19 @@ int		focus_in(int button, int x, int y, void *param)
 	button = 0;
 	env = (t_env*)param;
 
-	if(x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT && !((t_env*)env)->lock)
+	
+	if(x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
 	{
-		env->image->zoom += 0.25;
-		env->offset.x = (WIN_WIDTH_HALF - x) * 0.003 / env->image->zoom;
-		env->offset.y = (WIN_HEIGHT_HALF - y) * 0.003 / env->image->zoom;
+		//if (env->center.x != x && env->center.y != y)
+		//{
+			env->offset.x += -(WIN_WIDTH_HALF - x) * 0.0005 / env->image->zoom;
+			env->offset.y += -(WIN_HEIGHT_HALF - y) * 0.0005 / env->image->zoom;
+			env->center.x = x;
+			env->center.y = y;
+			env->image->zoom += 0.1;
+		//}
+//		printf("center.x - x :%d\ncenter.y - y:%d\n\n", env->center.x - x, env->center.y - y);
+
 		redraw(env);
 	}
 	return (0);	
