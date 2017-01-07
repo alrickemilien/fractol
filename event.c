@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 15:22:29 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/07 12:27:46 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/07 14:05:31 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ int		focus_in(int button, int x, int y, void *param)
 	
 	if(x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
 	{
-		//if (env->center.x != x && env->center.y != y)
-		//{
+	//	if (env->center.x != x && env->center.y != y)
+	//	{
 			env->offset.x += -(WIN_WIDTH_HALF - x) * 0.0005 / env->image->zoom;
 			env->offset.y += -(WIN_HEIGHT_HALF - y) * 0.0005 / env->image->zoom;
 			env->center.x = x;
 			env->center.y = y;
 			env->image->zoom += 0.1;
-		//}
+	//	}
 //		printf("center.x - x :%d\ncenter.y - y:%d\n\n", env->center.x - x, env->center.y - y);
 
 		redraw(env);
