@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/17 09:00:51 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/07 11:38:16 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/09 13:20:28 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct	s_z
 
 typedef struct	s_image
 {
-	int			bits_per_pixel;
+	int			bpp;
 	int			size_line;
 	int			endian;
 	int			width;
@@ -91,7 +91,7 @@ void	fill_image(t_image *image, int width, int height, t_color color);
 void	*julia_set(void *env);
 void	threads(t_env *env);
 void	*mandelbrot_set(void *env);
-void	*burningship_set(void *env);
+void	*third_set(void *env);
 int		key_release(int keycode, void *param);
 int		focus_in(int button, int x, int y, void *param);
 void	display_info_maths(t_env *env);

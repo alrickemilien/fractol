@@ -6,17 +6,17 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 16:46:15 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/05 16:46:18 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/09 12:56:55 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/fractol.h"
 
-static void	set_bitmapfileheader(int fd, t_image *image)
+static void			set_bitmapfileheader(int fd, t_image *image)
 {
 	unsigned char	*header;
 	unsigned char	*tmp;
-	int		len;
+	int				len;
 
 	header = (unsigned char*)malloc(14);
 	ft_bzero(header, 14);
@@ -32,11 +32,11 @@ static void	set_bitmapfileheader(int fd, t_image *image)
 	header[4] = tmp[2];
 	header[5] = tmp[3];
 	header[10] = 0x36;
-	if((len = write(fd, header, 14)) == -1)
-		ft_putendl_fd("Error writing a file : i may do not have rigts on it",2);
+	if ((len = write(fd, header, 14)) == -1)
+		ft_putendl_fd("Error creating screenshot", 2);
 }
 
-void	set_bitmapinfoheader(int fd, t_image *image)
+void				set_bitmapinfoheader(int fd, t_image *image)
 {
 	unsigned char	*header;
 	unsigned int	n;
@@ -59,12 +59,12 @@ void	set_bitmapinfoheader(int fd, t_image *image)
 	write(fd, header, 40);
 }
 
-void	data_to_bitmap(char *bitmap, t_image *image, int i)
+void				data_to_bitmap(char *bitmap, t_image *image, int i)
 {
-	int		x;
-	int		y;
-	int		line;
-	int		colonne;
+	int				x;
+	int				y;
+	int				line;
+	int				colonne;
 
 	y = image->height - 1;
 	while (y >= 0)
@@ -73,7 +73,7 @@ void	data_to_bitmap(char *bitmap, t_image *image, int i)
 		x = 0;
 		while (x < image->width)
 		{
-			colonne = x * image->bits_per_pixel / 8;
+			colonne = x * image->bpp / 8;
 			bitmap[i] = image->data[line + colonne];
 			bitmap[i + 1] = image->data[line + colonne + 1];
 			bitmap[i + 2] = image->data[line + colonne + 2];
@@ -84,10 +84,10 @@ void	data_to_bitmap(char *bitmap, t_image *image, int i)
 	}
 }
 
-void	set_bitmapdata(int fd, t_image *image)
+void				set_bitmapdata(int fd, t_image *image)
 {
-	char	*bitmap;
-	int		len;
+	char			*bitmap;
+	int				len;
 
 	len = image->width * image->height * 3;
 	while (len % 4)
@@ -98,11 +98,12 @@ void	set_bitmapdata(int fd, t_image *image)
 	write(fd, bitmap, len);
 }
 
-void	ft_bitmap(t_image *image)
+void				ft_bitmap(t_image *image)
 {
-	int		fd;
+	int				fd;
 
-	fd = open("screenshot.bmp", O_RDWR | O_EXCL | O_CREAT | O_NONBLOCK, S_IRUSR | S_IWUSR);
+	fd = open("screenshot.bmp", O_RDWR | O_EXCL | O_CREAT
+			| O_NONBLOCK, S_IRUSR | S_IWUSR);
 	set_bitmapfileheader(fd, image);
 	set_bitmapinfoheader(fd, image);
 	set_bitmapdata(fd, image);
