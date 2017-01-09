@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:50:16 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/05 15:55:34 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/09 14:03:50 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@ t_color	split_color(unsigned long color)
 
 	color_split.red = (color & 0xFF0000) >> 16;
 	color_split.green = (color & 0xFF00) >> 8;
-	color_split.blue= (color & 0xFF);
+	color_split.blue = (color & 0xFF);
 	return (color_split);
 }

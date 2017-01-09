@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 18:16:49 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/02 09:12:25 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/09 14:05:06 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,4 @@ void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 size_t			ft_lstlen(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-void			ft_lstpushback(t_list **alist, t_list *list);
 #endif

@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 17:56:35 by aemilien          #+#    #+#             */
-/*   Updated: 2016/12/06 15:01:25 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/09 14:05:21 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	if(!s)
+	if (!s)
 		return (NULL);
 	return ((char*)ft_memchr((void*)s, c, ft_strlen(s) + 1));
 }

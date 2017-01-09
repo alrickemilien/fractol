@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 15:22:29 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 13:14:45 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/09 14:22:55 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	redraw(t_env *env)
 {
-	free(env->image->data);
 	mlx_destroy_image(env->mlx, env->image->img);
 	env->image->img = mlx_new_image(env->mlx, WIN_WIDTH, WIN_HEIGHT);
 	env->image->width = WIN_WIDTH;
@@ -45,16 +44,25 @@ int		focus_in(int button, int x, int y, void *param)
 {
 	t_env	*env;
 
-	button = 0;
 	env = (t_env*)param;
 	if (x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
 	{
-		env->offset.x += -(WIN_WIDTH_HALF - x) * 0.0005 / env->image->zoom;
-		env->offset.y += -(WIN_HEIGHT_HALF - y) * 0.0005 / env->image->zoom;
+		if (button == 5)
+		{
+			env->offset.x += -(WIN_WIDTH_HALF - x) * 0.0005 / env->image->zoom;
+			env->offset.y += -(WIN_HEIGHT_HALF - y) * 0.0005 / env->image->zoom;
+			env->image->zoom += 0.1;
+			redraw(env);
+		}
+		else if (button == 4 && env->image->zoom > 0.5)
+		{
+			env->offset.x -= -(WIN_WIDTH_HALF - x) * 0.0005 / env->image->zoom;
+			env->offset.y -= -(WIN_HEIGHT_HALF - y) * 0.0005 / env->image->zoom;
+			env->image->zoom -= 0.1;
+			redraw(env);
+		}
 		env->center.x = x;
 		env->center.y = y;
-		env->image->zoom += 0.1;
-		redraw(env);
 	}
 	return (0);
 }
