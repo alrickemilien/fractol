@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 16:46:15 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 12:56:55 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:24:42 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 static void			set_bitmapfileheader(int fd, t_image *image)
 {
@@ -102,7 +102,7 @@ void				ft_bitmap(t_image *image)
 {
 	int				fd;
 
-	fd = open("screenshot.bmp", O_RDWR | O_EXCL | O_CREAT
+	fd = open("screenshot.bmp", O_RDWR | O_CREAT
 			| O_NONBLOCK, S_IRUSR | S_IWUSR);
 	set_bitmapfileheader(fd, image);
 	set_bitmapinfoheader(fd, image);

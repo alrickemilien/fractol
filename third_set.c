@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 12:40:37 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 13:20:58 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:24:07 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 static int		ft_module(t_z z)
 {
@@ -37,9 +37,9 @@ static	int		third_set_color(t_env *env, int color, int x, int y)
 	{
 		old.re = new.re;
 		old.im = new.im;
-		new.re = old.re * old.re - old.im * old.im + pixel.re;
-		new.im = 2 * old.re * old.im + pixel.im;
-		color -= 10000;
+		new.re = fabs(old.re * old.re - old.im * old.im + pixel.re);
+		new.im = fabs(2 * old.re * old.im + pixel.im);
+		color -= n * 1.61 * n / M_PI;
 		n++;
 	}
 	return (color);
@@ -62,7 +62,7 @@ void			*third_set(void *void_env)
 			if (x < WIN_WIDTH && y < WIN_HEIGHT && x > 0 && y > 0)
 				put_pixel_to_image(env->image, x, y, split_color(
 					mlx_get_color_value(env->mlx,
-						third_set_color(env, 0x00FFFFFF, x, y))));
+						third_set_color(env, 0x000002AA, x, y))));
 			x++;
 		}
 		y++;

@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 14:15:38 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 13:08:04 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:24:49 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 void	put_pixel_to_image(t_image *image, int x, int y, t_color color)
 {

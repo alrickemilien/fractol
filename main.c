@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:17:48 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 13:26:56 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:43:14 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 void	init_env_values(t_env *env)
 {
@@ -18,6 +18,8 @@ void	init_env_values(t_env *env)
 	env->cursor.x = 0;
 	env->cursor.y = 0;
 	env->max_iter = 250;
+	if (env->f == &third_set)
+		env->max_iter = 200;
 	env->offset.x = 0;
 	env->offset.y = 0;
 	env->constante.re = -0.7;

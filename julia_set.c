@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/07 12:25:42 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 13:06:53 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:24:27 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 int			ft_module(t_z z)
 {
@@ -34,7 +34,7 @@ static int	julia_iter(t_env *env, int color, int x, int y)
 		old.im = new.im;
 		new.re = old.re * old.re - old.im * old.im + env->constante.re;
 		new.im = 2 * old.re * old.im + env->constante.im;
-		color -= 8000;
+		color -= n * n << n;
 		if (ft_module(new) > 4)
 			break ;
 		n++;

@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 17:33:28 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 13:19:32 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:25:38 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 static void		env_cpy(t_env *env, t_env *tmp, int i)
 {

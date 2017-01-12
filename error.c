@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 12:57:33 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 12:57:43 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:23:30 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 int		error(char *str)
 {

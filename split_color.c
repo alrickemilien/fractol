@@ -6,11 +6,11 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:50:16 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/09 14:03:50 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 10:24:58 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 
 t_color	split_color(unsigned long color)
 {
