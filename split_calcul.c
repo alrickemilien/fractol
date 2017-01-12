@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 17:33:28 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/12 10:25:38 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 11:26:51 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			threads(t_env *env)
 
 	pthread = (pthread_t*)malloc(sizeof(pthread_t) * 8);
 	if (!(tmp = (t_env*)malloc(sizeof(t_env) * 8)))
-		error("error malloc");
+		error("error malloc in threads");
 	i = 0;
 	while (i < 8)
 	{

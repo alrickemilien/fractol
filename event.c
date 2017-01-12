@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 15:22:29 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/12 10:57:15 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 11:16:36 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,7 @@ static void	move_fractal(int keycode, void *env)
 int			key_press(int keycode, void *env)
 {
 	if (keycode == 53)
-	{
-		mlx_destroy_window(((t_env*)env)->mlx,
-							((t_env*)env)->win);
-		exit(0);
-	}
+		end_program((t_env *)env);
 	if (keycode == 49 && !((t_env*)env)->lock)
 		((t_env*)env)->lock = 1;
 	else if (keycode == 49 && ((t_env*)env)->lock)

@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/12 11:01:17 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/12 11:01:31 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 11:20:58 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void			*third_set(void *env);
 void			put_pixel_to_image(t_image *image, int x, int y, t_color color);
 t_color			split_color(unsigned long color);
 void			display_info_maths(t_env *env);
+void			end_program(t_env *env);
 int				key_release(int keycode, void *param);
 int				focus_in(int button, int x, int y, void *param);
 int				key_press(int keycode, void *param);

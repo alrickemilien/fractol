@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 13:17:48 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/12 10:43:14 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 11:26:09 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		main(int argc, char **argv)
 	t_env	*env;
 
 	if (!(env = (t_env*)malloc(sizeof(t_env))))
-		error("error malloc");
+		error("error malloc in main");
 	if (!parse(env, argc, argv))
 	{
 		free(env);
