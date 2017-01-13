@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 15:22:29 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/12 11:16:36 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 12:25:42 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static void	move_fractal(int keycode, void *env)
 	if (keycode == 125)
 		((t_env*)env)->offset.y -= 0.25 / ((t_env*)env)->image->zoom;
 	if (keycode == 124)
-		((t_env*)env)->offset.x += 0.25 / ((t_env*)env)->image->zoom;
-	if (keycode == 123)
 		((t_env*)env)->offset.x -= 0.25 / ((t_env*)env)->image->zoom;
+	if (keycode == 123)
+		((t_env*)env)->offset.x += 0.25 / ((t_env*)env)->image->zoom;
 }
 
 int			key_press(int keycode, void *env)

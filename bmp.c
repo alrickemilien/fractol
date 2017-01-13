@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 16:46:15 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/12 11:09:18 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/12 11:30:50 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void				set_bitmapdata(int fd, t_image *image)
 	while (len % 4)
 		len++;
 	if (!(bitmap = (char*)malloc(sizeof(char) * len)))
-		error ("error alloc in func set_bitmapdata");
+		error("error alloc in func set_bitmapdata");
 	ft_bzero(bitmap, sizeof(char) * len);
 	data_to_bitmap(bitmap, image, 0);
 	write(fd, bitmap, len);
