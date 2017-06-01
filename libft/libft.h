@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/19 18:16:49 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/12 11:31:11 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/05/16 09:48:14 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char			*ft_strsub(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s);
 char			**ft_strsplit(char const *s, char c);
-char			*ft_itoa(int n);
+char			*ft_itoa(long long n);
 void			ft_putchar(char c);
 void			ft_putstr(char const *s);
 void			ft_putendl(char const *s);
@@ -88,4 +88,9 @@ void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 size_t			ft_lstlen(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+char			*ft_strrepeat(char *s, int n);
+void			recycle(char **s, char *news);
+char			*ft_char_to_str(unsigned char c);
+char			*ft_strupcase(char *src);
+char			*ft_strsplice(char *current, char *to_add, int index);
 #endif

@@ -6,7 +6,7 @@
 #    By: aemilien <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/16 11:45:00 by aemilien          #+#    #+#              #
-#    Updated: 2017/01/12 10:27:55 by aemilien         ###   ########.fr        #
+#    Updated: 2017/05/14 15:03:14 by aemilien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC= ft_isdigit.c ft_memcpy.c ft_putendl_fd.c ft_strclr.c ft_striteri.c ft_strnc
 	 ft_strequ.c ft_strmapi.c ft_strrchr.c ft_isascii.c ft_memcmp.c ft_putendl.c \
 	 ft_strchr.c ft_striter.c ft_strncat.c ft_strsplit.c ft_lstadd.c ft_lstdel.c \
 	 ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c ft_lstlen.c \
-	 get_next_line.c ft_ltoa.c ft_dtoa.c ft_power.c
+	 get_next_line.c ft_ltoa.c ft_dtoa.c ft_power.c ft_strrepeat.c recycle.c\
+	 ft_char_to_str.c ft_strupcase.c ft_strsplice.c\
 
 OBJ=$(SRC:.c=.o)
 
@@ -30,9 +31,11 @@ NAME=libft.a
 
 all: $(NAME)
 
-$(NAME):
-	@gcc -c  $(CCFLAGS) $(SRC)
+$(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
+
+%.o: %.c
+	@gcc -o $@ -c $< $(CCFLAGS)
 
 clean:
 	@rm -rf $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 08:54:59 by aemilien          #+#    #+#             */
-/*   Updated: 2017/01/02 09:10:53 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/05/10 11:52:29 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,11 @@ static int	ft_nbrlen(long n)
 {
 	int		len;
 
-	if (n == -2147483648)
-		return (20);
 	len = 0;
 	if (!n)
 		return (1);
 	if (n < 0)
-	{
-		n = -n;
 		len++;
-	}
 	while (n)
 	{
 		n /= 10;
@@ -39,23 +34,21 @@ char		*ft_ltoa(long n)
 	char	*s;
 	size_t	len;
 
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
+	if (!n)
+		return (ft_strdup("0"));
 	len = ft_nbrlen(n) + 1;
 	if (!(s = (char*)malloc(sizeof(char) * len)))
 		return (NULL);
-	if (!n)
-		s[0] = '0';
 	if (n < 0)
-	{
 		s[0] = '-';
-		n = -n;
-	}
 	s[len - 1] = '\0';
 	while (n)
 	{
 		len--;
-		s[len - 1] = (n % 10) + '0';
+		if (n > 0)
+			s[len - 1] = (n % 10) + '0';
+		else
+			s[len - 1] = -(n % 10) + '0';
 		n /= 10;
 	}
 	return (s);

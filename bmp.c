@@ -36,7 +36,7 @@ static void			set_bitmapfileheader(int fd, t_image *image)
 		ft_putendl_fd("Error creating screenshot", 2);
 }
 
-void				set_bitmapinfoheader(int fd, t_image *image)
+static int				set_bitmapinfoheader(int fd, t_image *image)
 {
 	unsigned char	*header;
 	unsigned int	n;
@@ -56,10 +56,15 @@ void				set_bitmapinfoheader(int fd, t_image *image)
 	header[25] = 0x0E;
 	header[28] = 0xC3;
 	header[29] = 0x0E;
-	write(fd, header, 40);
+	if (write(fd, header, 40) == 0){
+		free(header);
+		return (0);		
+	}
+	free(header);
+	return (1);
 }
 
-void				data_to_bitmap(char *bitmap, t_image *image, int i)
+static void				data_to_bitmap(char *bitmap, t_image *image, int i)
 {
 	int				x;
 	int				y;
@@ -84,10 +89,11 @@ void				data_to_bitmap(char *bitmap, t_image *image, int i)
 	}
 }
 
-void				set_bitmapdata(int fd, t_image *image)
+static int				set_bitmapdata(int fd, t_image *image)
 {
 	char			*bitmap;
 	int				len;
+	int				ret;
 
 	len = image->width * image->height * 3;
 	while (len % 4)
@@ -96,8 +102,11 @@ void				set_bitmapdata(int fd, t_image *image)
 		error("error alloc in func set_bitmapdata");
 	ft_bzero(bitmap, sizeof(char) * len);
 	data_to_bitmap(bitmap, image, 0);
-	write(fd, bitmap, len);
+	ret = write(fd, bitmap, len);
 	free(bitmap);
+	if(!ret)
+		return (0);
+	return (1);
 }
 
 void				ft_bitmap(t_image *image)

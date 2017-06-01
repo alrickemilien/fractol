@@ -6,13 +6,13 @@
 /*   By: aemilien <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 17:36:26 by aemilien          #+#    #+#             */
-/*   Updated: 2016/11/26 20:01:27 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/05/12 19:15:03 by aemilien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_sizeofnbr(int n, int *m)
+static int	ft_sizeofnbr(long long n, long long *m)
 {
 	int		size;
 
@@ -28,14 +28,14 @@ static int	ft_sizeofnbr(int n, int *m)
 	return (size);
 }
 
-char		*ft_itoa(int n)
+char		*ft_itoa(long long n)
 {
-	char	*str;
-	int		m;
-	int		i;
+	char			*str;
+	long long		m;
+	int				i;
 
-	if (n < -2147483648 || n > 2147483647)
-		return (NULL);
+	if (!n)
+		return (ft_strdup("0"));
 	str = ft_strnew(ft_sizeofnbr(n, &m));
 	if (!str)
 		return (NULL);

@@ -1,45 +1,63 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: aemilien <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/12/26 13:27:27 by aemilien          #+#    #+#              #
-#    Updated: 2017/01/12 11:20:06 by aemilien         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME=fractol
 
-CCFLAGS= -Wall -Wextra -Werror  -O3 -o
+OS="$(shell uname)"
+
+CCFLAGS= -O3 -Wall -Wextra -Werror 
 
 LIBFT= -lft -L libft -I libft
 
-LPTHREAD= -lpthread
+USAGE="Usage : ./fractol [--julia] [--mandelbrot] [--burninship]"
 
-LIBMLX= -lmlx -L minilibx_macos -I minilibx_macos
+LPTHREAD= -lpthread
 
 FRAMEWORK= -framework OpenGL -framework AppKit
 
-SRC= main.c event.c error.c split_color.c put_pixel_to_image.c julia_set.c mandelbrot_set.c redraw.c\
-third_set.c display_info_maths.c bmp.c ft_write_n_bytes.c split_calcul.c end_program.c\
+INCLUDE=-I includes
+
+SRCS= main.c event.c error.c split_color.c put_pixel_to_image.c\
+	  julia_set.c mandelbrot_set.c third_set.c  \
+	  redraw.c display_info_maths.c bmp.c\
+	  ft_write_n_bytes.c split_calcul.c end_program.c\
 
 OBJ=$(SRCS:.c=.o)
 
-NAME=fractol
+ifeq ($(OS), "Linux")
+	TARGET= LINUX
+	LIBMLX_SRCS= minilibx_linux
+else
+	TARGET= MACOS
+	LIBMLX_SRCS= minilibx_macos
+endif
 
-all: $(NAME)
+LIBMLX= -lmlx -L $(LIBMLX_SRCS) -I $(LIBMLX_SRCS)
 
-$(NAME): $(OBJ)
-	@make re -C libft
-	@gcc $(CCFLAGS) $@ $(SRC) $(LIBFT) $(LIBMLX) $(LPTHREAD) $(FRAMEWORK)
 
-%.o:%.c
-	@gcc $(CCFLAGS) $@ -c $< $(LIBFT) $(LPTHREAD) $(LIBMLX)
+all: $(TARGET)
+
+LINUX: $(OBJ)
+	@make -C libft
+	@make -C minilibx_linux
+	@gcc -o $(NAME) $^ $(LIBFT) $(INCLUDE) $(LPTHREAD) \
+	$(LIBMLX) $(CCFLAGS) -lX11 -lXext -lm \
+	`pkg-config --libs --cflags x11` 
+	
+MACOS: $(OBJ)
+	@make -C libft
+	@make -C minilibx_macos
+	@gcc $@ $^ $(LIBFT) $(LPTHREAD)\
+	$(LIBMLX) $(FRAMEWORK) $(CCFLAGS)
+
+%.o: %.c
+	@gcc -o $@ -c $< $(INCLUDE) $(LIBFT) $(LIBMLX) $(LPTHREAD) $(CCFLAGS)
 
 clean:
+	@make clean -C libft
+	@make clean -C $(LIBMLX_SRCS)
 	@rm -rf $(OBJ)
 
 fclean: clean
+	@make fclean -C libft
+	@make fclean -C $(LIBMLX_SRCS)
 	@rm -rf $(NAME)
 
 re: fclean all
