@@ -44,11 +44,11 @@ LINUX: $(OBJ)
 MACOS: $(OBJ)
 	@make -C libft
 	@make -C minilibx_macos
-	@gcc $@ $^ $(LIBFT) $(LPTHREAD)\
+	@gcc -o $(NAME) $^ $(LIBFT) $(LPTHREAD) \
 	$(LIBMLX) $(FRAMEWORK) $(CCFLAGS)
 
 %.o: %.c
-	@gcc -o $@ -c $< $(INCLUDE) $(LIBFT) $(LIBMLX) $(LPTHREAD) $(CCFLAGS)
+	@gcc -o $@ -c $< $(INCLUDE) $(CCFLAGS)
 
 clean:
 	@make clean -C libft
