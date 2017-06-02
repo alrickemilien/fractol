@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "includes/fractol.h"
 #include "macro_key_mlx.h"
 
 int			mouse_motion_hook(int x, int y, void *param)

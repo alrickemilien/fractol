@@ -21,10 +21,19 @@
 # include <math.h>
 # include <pthread.h>
 # define USAGE "Usage : ./fractol [--julia] [--mandelbrot] [--burninship]"
+# ifdef __APPLE__
 # define WIN_WIDTH 1200
 # define WIN_HEIGHT 1200
 # define WIN_WIDTH_HALF 600
 # define WIN_HEIGHT_HALF 600
+#endif
+# ifdef __linux__
+# define WIN_HEIGHT 600
+# define WIN_WIDTH 600
+# define WIN_WIDTH_HALF 300
+# define WIN_HEIGHT_HALF 300
+# endif
+
 
 typedef struct	s_z
 {
@@ -82,6 +91,7 @@ typedef	struct	s_env
 	t_point		center;
 }				t_env;
 
+void	redraw(t_env *env);
 int		error(char *str);
 int		key_press(int keycode, void *param);
 int		mouse_motion_hook(int x, int y, void *param);
@@ -97,4 +107,5 @@ int		focus_in(int button, int x, int y, void *param);
 void	display_info_maths(t_env *env);
 void	ft_bitmap(t_image *image);
 void	ft_write_n_bytes(unsigned char *dest, unsigned char *src, int n);
+void	end_program(t_env *env);
 #endif
