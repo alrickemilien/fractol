@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include "macro_key_mlx.h"
 
 int			mouse_motion_hook(int x, int y, void *param)
 {
@@ -57,32 +58,32 @@ int			focus_in(int button, int x, int y, void *param)
 
 static void	move_fractal(int keycode, void *env)
 {
-	if (keycode == 126)
+	if (keycode == KEY_DOWN)
 		((t_env*)env)->offset.y += 0.25 / ((t_env*)env)->image->zoom;
-	if (keycode == 125)
+	if (keycode == KEY_UP)
 		((t_env*)env)->offset.y -= 0.25 / ((t_env*)env)->image->zoom;
-	if (keycode == 124)
+	if (keycode == KEY_RIGHT)
 		((t_env*)env)->offset.x -= 0.25 / ((t_env*)env)->image->zoom;
-	if (keycode == 123)
+	if (keycode == KEY_LEFT)
 		((t_env*)env)->offset.x += 0.25 / ((t_env*)env)->image->zoom;
 }
 
 int			key_press(int keycode, void *env)
 {
-	if (keycode == 53)
+	if (keycode == KEY_ESC)
 		end_program((t_env *)env);
-	if (keycode == 49 && !((t_env*)env)->lock)
+	if (keycode == KEY_SPACEBAR && !((t_env*)env)->lock)
 		((t_env*)env)->lock = 1;
-	else if (keycode == 49 && ((t_env*)env)->lock)
+	else if (keycode == KEY_SPACEBAR && ((t_env*)env)->lock)
 		((t_env*)env)->lock = 0;
-	if (keycode == 259)
+	if (keycode == KEY_COMMAND_LEFT || KEY_COMMAND_RIGHT)
 		((t_env*)env)->command = 1;
 	move_fractal(keycode, env);
 	if (keycode == 1 && ((t_env*)env)->command)
 		ft_bitmap(((t_env*)env)->image);
-	if (keycode == 69 && ((t_env*)env)->max_iter < 500)
+	if (keycode == KEY_PAD_ADD && ((t_env*)env)->max_iter < 500)
 		((t_env*)env)->max_iter += 5;
-	if (keycode == 78 && ((t_env*)env)->max_iter > 10)
+	if (keycode == KEY_PAD_SUB && ((t_env*)env)->max_iter > 10)
 		((t_env*)env)->max_iter -= 5;
 	redraw(env);
 	return (0);
@@ -93,7 +94,7 @@ int			key_release(int keycode, void *param)
 	t_env	*env;
 
 	env = (t_env*)param;
-	if (keycode == 259)
+	if (keycode == KEY_COMMAND_LEFT || KEY_COMMAND_RIGHT)
 		env->command = 0;
 	return (0);
 }

@@ -6,13 +6,14 @@
 /*   By: salibert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 17:54:37 by salibert          #+#    #+#             */
-/*   Updated: 2016/12/28 11:54:53 by aemilien         ###   ########.fr       */
+/*   Updated: 2017/01/30 19:22:27 by salibert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACRO_KEY_MLX_H
 # define MACRO_KEY_MLX_H
 
+#ifdef __APPLE__
 # define KEY_ESC	         53
 # define KEY_F1             122
 # define KEY_F2             120
@@ -59,7 +60,7 @@
 # define KEY_O              31
 # define KEY_P              35
 # define KEY_OPEN_BRACKET   33
-# define KEY_OPEN_BRACE     33
+# define KEY_OPEN_BRACE     3
 # define KEY_CLOSE_BRACKET  30
 # define KEY_CLOSE_BRACE    30
 # define KEY_BACKSLASH      42
@@ -130,5 +131,22 @@
 # define KEY_PAD_ADD        69
 # define KEY_PAD_ENTER      76
 # define KEY_PAD_DOT        65
+#endif
+
+#ifdef __linux__
+# define KEY_ESC			65307
+# define KEY_CLOSE_BRACKET  65430
+# define KEY_OPEN_BRACKET	65432
+# define KEY_PAD_ADD        65453
+# define KEY_PAD_SUB        65451
+# define KEY_SPACEBAR       32
+# define KEY_COMMAND_LEFT   65507
+# define KEY_COMMAND_RIGHT   65507
+# define KEY_DOWN           65364
+# define KEY_UP				65362
+# define KEY_RIGHT			65363
+# define KEY_LEFT			65361
+
+#endif
 
 #endif

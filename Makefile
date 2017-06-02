@@ -57,7 +57,6 @@ clean:
 
 fclean: clean
 	@make fclean -C libft
-	@make fclean -C $(LIBMLX_SRCS)
 	@rm -rf $(NAME)
 
 re: fclean all
