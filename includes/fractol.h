@@ -12,6 +12,7 @@
 
 #ifndef FDF_H
 # define FDF_H
+
 # include "../libft/libft.h"
 # include "mlx.h"
 # include "macro_key_mlx.h"
@@ -20,7 +21,9 @@
 # include <stdlib.h>
 # include <math.h>
 # include <pthread.h>
+
 # define USAGE "Usage : ./fractol [--julia] [--mandelbrot] [--burninship]"
+
 # ifdef __APPLE__
 # define WIN_WIDTH 1200
 # define WIN_HEIGHT 1200
@@ -34,6 +37,24 @@
 # define WIN_HEIGHT_HALF 300
 # endif
 
+
+/*
+* * MACROS to access more easily to x server pointeurs to variables
+* * that will be always manipulated
+* * like x_server, window, image_buffer, etc
+*/
+#define X_SERVER env->x_server
+#define WINDOW env->window
+#define IMAGE env->image
+#define IMAGE_BUFFER env->image_buffer
+#define WINDOW_WIDTH env->window_width
+#define WINDOW_HEIGHT env->window_height
+#define BPP env->bpp
+#define SIZE_LINE env->size_line
+#define ENDIAN env->endian
+
+#define DEFAULT_WINDOW_WIDTH 600
+#define DEFAULT_WINDOW_HEIGHT 600
 
 typedef struct	s_z
 {
@@ -72,10 +93,22 @@ typedef struct s_color
 	unsigned char	blue;
 }				t_color;
 
-typedef	struct	s_env
+
+typedef struct	s_software_environ
 {
-	void		*mlx;
-	void		*win;
+	// X SERVER SHITS
+  void *x_server;
+  void *window;
+  void *image;
+  char *image_buffer;
+
+  int			window_width;
+  int			window_height;
+	int			bpp;
+	int			size_line;
+	int			endian;
+
+	// FRACTOL SPEC SHITS
 	void		*(*f)(void *);
 	t_image		*image;
 	t_z			constante;
@@ -89,7 +122,7 @@ typedef	struct	s_env
 	int			shift;
 	int			lock;
 	t_point		center;
-}				t_env;
+} t_env;
 
 void	redraw(t_env *env);
 int		error(char *str);
