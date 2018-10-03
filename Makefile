@@ -16,7 +16,8 @@ INCLUDE=-I includes
 
 SRC= src/main.c \
 		src/event.c \
-		src/error.c split_color.c \
+		src/error.c \
+		src/split_color.c \
 		src/put_pixel_to_image.c\
 	  src/julia_set.c \
 		src/mandelbrot_set.c \
@@ -24,8 +25,8 @@ SRC= src/main.c \
 	  src/redraw.c \
 		src/display_info_maths.c \
 		src/bmp.c\
-	  src/ft_write_n_\
-		src/bytes.c split_calcul.c \
+	  src/ft_write_n_bytes.c \
+		src/split_calcul.c \
 		src/end_program.c\
 
 OBJ=$(SRC:.c=.o)
@@ -40,7 +41,7 @@ endif
 
 LIBMLX= -lmlx -L $(LIBMLX_SRCS)
 
-INCLUDE= -I $(LIBMLX_SRCS)
+INCLUDE= -I $(LIBMLX_SRCS) -I includes
 
 
 all: $(TARGET)

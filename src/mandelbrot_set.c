@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-static int		ft_module(t_z z)
+static inline int		get_imaginary_number_module(t_z z)
 {
 	return (z.re * z.re + z.im * z.im);
 }
@@ -24,16 +24,17 @@ static int		mandelbrot_set_color(t_env *env, int color, int x, int y)
 	t_z			pixel;
 	int			n;
 
-	pixel.re = ((double)(3 * (x - WIN_WIDTH / 2))) /
-				((double)(env->image->zoom * WIN_WIDTH)) + env->offset.x;
-	pixel.im = ((double)(2 * (y - WIN_HEIGHT / 2))) /
-				((double)(env->image->zoom * WIN_HEIGHT)) + env->offset.y;
+	pixel.re = ((double)(3 * (x - DEFAULT_WINDOW_WIDTH / 2))) /
+				((double)(env->zoom * DEFAULT_WINDOW_WIDTH)) + env->offset.x;
+	pixel.im = ((double)(2 * (y - DEFAULT_WINDOW_HEIGHT / 2))) /
+				((double)(env->zoom * DEFAULT_WINDOW_HEIGHT)) + env->offset.y;
 	new.re = 0;
 	new.im = 0;
 	old.re = 0;
 	old.im = 0;
 	n = 0;
-	while (n < env->max_iter && ft_module(new) <= 4)
+
+	while (n < env->max_iteration && get_imaginary_number_module(new) <= 4)
 	{
 		old.re = new.re;
 		old.im = new.im;
@@ -42,6 +43,7 @@ static int		mandelbrot_set_color(t_env *env, int color, int x, int y)
 		color -= n * n << n;
 		n++;
 	}
+
 	return (color);
 }
 
@@ -53,14 +55,14 @@ void			*mandelbrot_set(void *void_env)
 
 	env = (t_env*)void_env;
 	y = 0;
-	while (y < WIN_HEIGHT)
+	while (y < DEFAULT_WINDOW_HEIGHT)
 	{
-		x = env->thread_index * WIN_WIDTH / 4;
-		while (x < env->thread_index * WIN_WIDTH / 4 + WIN_WIDTH / 4)
+		x = env->thread_index * DEFAULT_WINDOW_WIDTH / 4;
+		while (x < env->thread_index * DEFAULT_WINDOW_WIDTH / 4 + DEFAULT_WINDOW_WIDTH / 4)
 		{
-			if (x < WIN_WIDTH && y < WIN_HEIGHT && x > 0 && y > 0)
-				put_pixel_to_image(env->image, x, y, split_color(
-					mlx_get_color_value(env->mlx,
+			if (x < DEFAULT_WINDOW_WIDTH && y < DEFAULT_WINDOW_HEIGHT && x > 0 && y > 0)
+				put_pixel_to_image(env, x, y, split_color(
+					mlx_get_color_value(X_SERVER,
 						mandelbrot_set_color(env, 0x00FFFFFF, x, y))));
 			x++;
 		}

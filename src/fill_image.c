@@ -1,4 +1,4 @@
-#include "includes/fractol.h"
+#include "fractol.h"
 
 void	fill_image(t_image *image, int width, int height, t_color color)
 {

@@ -12,76 +12,80 @@
 
 #include "fractol.h"
 
-static void			set_bitmapfileheader(int fd, t_image *image)
+static void			set_bitmapfileheader(int fd, t_env *env)
 {
 	unsigned char	*header;
-	unsigned char	*tmp;
 	int				len;
+
+	(void)env;
 
 	header = (unsigned char*)malloc(14);
 	ft_bzero(header, 14);
-	header[0] = 0x42;
-	header[1] = 0x4D;
-	len = image->width * image->height * 3;
+	ft_memcpy(header, "\x42\x4D", 2);
+
+	len = DEFAULT_WINDOW_WIDTH * DEFAULT_WINDOW_HEIGHT * 3;
 	while (len % 4)
 		len++;
 	len += 54;
-	tmp = (unsigned char*)&len;
-	header[2] = tmp[0];
-	header[3] = tmp[1];
-	header[4] = tmp[2];
-	header[5] = tmp[3];
+
+	ft_memcpy(header + 2, &len, 4);
+
 	header[10] = 0x36;
+
 	if ((len = write(fd, header, 14)) == -1)
 		ft_putendl_fd("Error creating screenshot", 2);
 }
 
-static int				set_bitmapinfoheader(int fd, t_image *image)
+static int				set_bitmapinfoheader(int fd, t_env *env)
 {
 	unsigned char	*header;
 	unsigned int	n;
 
+	(void)env;
+
 	header = (unsigned char*)malloc(40);
 	ft_bzero(header, 40);
 	header[0] = 0x28;
-	n = image->width;
+
+	n = DEFAULT_WINDOW_WIDTH;
 	ft_write_n_bytes(header, (unsigned char*)&n, 4);
-	n = image->height;
+
+	n = DEFAULT_WINDOW_HEIGHT;
 	ft_write_n_bytes(header, (unsigned char*)&n, 8);
-	header[12] = 0x01;
-	header[14] = 0x18;
-	n = image->height * image->width * 3;
+
+	ft_memcpy(header + 12, "\x01\x18", 2);
+
+	n = DEFAULT_WINDOW_HEIGHT * DEFAULT_WINDOW_WIDTH * 3;
 	ft_write_n_bytes(header, (unsigned char*)&n, 20);
-	header[24] = 0xC3;
-	header[25] = 0x0E;
-	header[28] = 0xC3;
-	header[29] = 0x0E;
+
+	ft_memcpy(header + 24, "\xC3\x0E\xC\x0E", 4);
+
 	if (write(fd, header, 40) == 0){
 		free(header);
-		return (0);		
+		return (0);
 	}
 	free(header);
 	return (1);
 }
 
-static void				data_to_bitmap(char *bitmap, t_image *image, int i)
+static void				data_to_bitmap(char *bitmap, t_env *env, int i)
 {
 	int				x;
 	int				y;
 	int				line;
 	int				colonne;
 
-	y = image->height - 1;
+	y = DEFAULT_WINDOW_HEIGHT - 1;
 	while (y >= 0)
 	{
-		line = y * image->size_line;
+		line = y * env->size_line;
 		x = 0;
-		while (x < image->width)
+		while (x < DEFAULT_WINDOW_WIDTH)
 		{
-			colonne = x * image->bpp / 8;
-			bitmap[i] = image->data[line + colonne];
-			bitmap[i + 1] = image->data[line + colonne + 1];
-			bitmap[i + 2] = image->data[line + colonne + 2];
+			colonne = x * BPP / 8;
+			bitmap[i] = IMAGE_BUFFER[line + colonne];
+			bitmap[i + 1] = IMAGE_BUFFER[line + colonne + 1];
+			bitmap[i + 2] = IMAGE_BUFFER[line + colonne + 2];
 			i += 3;
 			x++;
 		}
@@ -89,19 +93,19 @@ static void				data_to_bitmap(char *bitmap, t_image *image, int i)
 	}
 }
 
-static int				set_bitmapdata(int fd, t_image *image)
+static int				set_bitmapdata(int fd, t_env *env)
 {
 	char			*bitmap;
 	int				len;
 	int				ret;
 
-	len = image->width * image->height * 3;
+	len = DEFAULT_WINDOW_WIDTH * DEFAULT_WINDOW_WIDTH * 3;
 	while (len % 4)
 		len++;
 	if (!(bitmap = (char*)malloc(sizeof(char) * len)))
 		error("error alloc in func set_bitmapdata");
 	ft_bzero(bitmap, sizeof(char) * len);
-	data_to_bitmap(bitmap, image, 0);
+	data_to_bitmap(bitmap, IMAGE, 0);
 	ret = write(fd, bitmap, len);
 	free(bitmap);
 	if(!ret)
@@ -109,15 +113,24 @@ static int				set_bitmapdata(int fd, t_image *image)
 	return (1);
 }
 
-void				ft_bitmap(t_image *image)
+void				ft_bitmap(t_env *env)
 {
 	int				fd;
 
-	fd = open("screenshot.bmp", O_RDWR | O_CREAT
+	fd = open("assets/screenshot.bmp", O_RDWR | O_CREAT
 			| O_NONBLOCK, S_IRUSR | S_IWUSR);
-	set_bitmapfileheader(fd, image);
-	set_bitmapinfoheader(fd, image);
-	set_bitmapdata(fd, image);
+
+	if (fd == -1) {
+		ft_putendl_fd("Scrrenshot has been taken because an error occured", 2);
+
+		return ;
+	}
+
+	set_bitmapfileheader(fd, env);
+	set_bitmapinfoheader(fd, env);
+	set_bitmapdata(fd, env);
+
 	close(fd);
+
 	ft_putendl("screenshot.bmp has been created");
 }

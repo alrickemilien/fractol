@@ -23,12 +23,12 @@ static int	julia_iter(t_env *env, int color, int x, int y)
 	t_z		old;
 	t_z		new;
 
-	new.re = ((double)(3 * (x - WIN_WIDTH_HALF))) /
-		((double)(env->image->zoom * WIN_WIDTH)) + env->offset.x;
-	new.im = (double)(2 * (y - WIN_HEIGHT_HALF)) /
-		((double)(env->image->zoom * WIN_HEIGHT)) + env->offset.y;
+	new.re = ((double)(3 * (x - DEFAULT_WINDOW_WIDTH / 2))) /
+		((double)(env->zoom * DEFAULT_WINDOW_WIDTH)) + env->offset.x;
+	new.im = (double)(2 * (y - DEFAULT_WINDOW_HEIGHT / 2)) /
+		((double)(env->zoom * DEFAULT_WINDOW_HEIGHT)) + env->offset.y;
 	n = 0;
-	while (n < env->max_iter)
+	while (n < env->max_iteration)
 	{
 		old.re = new.re;
 		old.im = new.im;
@@ -50,14 +50,14 @@ void		*julia_set(void *void_env)
 
 	env = (t_env*)void_env;
 	y = 0;
-	while (y < WIN_HEIGHT)
+	while (y < DEFAULT_WINDOW_HEIGHT)
 	{
-		x = WIN_WIDTH / 8 * env->thread_index;
-		while (x < WIN_WIDTH / 8 * (env->thread_index + 1))
+		x = DEFAULT_WINDOW_WIDTH / NUMBER_OF_THREADS * env->thread_index;
+		while (x < DEFAULT_WINDOW_WIDTH / NUMBER_OF_THREADS * (env->thread_index + 1))
 		{
-			if (x < WIN_WIDTH && y < WIN_HEIGHT && x > 0 && y > 0)
-				put_pixel_to_image(env->image, x, y,
-				split_color(mlx_get_color_value(env->mlx,
+			if (x < DEFAULT_WINDOW_WIDTH && y < DEFAULT_WINDOW_HEIGHT && x > 0 && y > 0)
+				put_pixel_to_image(env, x, y,
+				split_color(mlx_get_color_value(X_SERVER,
 					julia_iter(env, 0x00FFFFFF, x, y))));
 			x++;
 		}

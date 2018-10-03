@@ -12,14 +12,14 @@
 
 #include "fractol.h"
 
-void	put_pixel_to_image(t_image *image, int x, int y, t_color color)
+void	put_pixel_to_image(t_env *env, int x, int y, t_color color)
 {
 	int		line;
 	int		colonne;
 
-	line = y * image->size_line;
-	colonne = x * image->bpp / 8;
-	image->data[line + colonne] = color.blue;
-	image->data[line + colonne + 1] = color.green;
-	image->data[line + colonne + 2] = color.red;
+	line = y * SIZE_LINE;
+	colonne = x * BPP / 8;
+	IMAGE_BUFFER[line + colonne] = color.blue;
+	IMAGE_BUFFER[line + colonne + 1] = color.green;
+	IMAGE_BUFFER[line + colonne + 2] = color.red;
 }

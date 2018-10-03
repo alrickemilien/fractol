@@ -14,10 +14,8 @@
 
 void	redraw(t_env *env)
 {
-	mlx_destroy_image(env->mlx, env->image->img);
-	env->image->img = mlx_new_image(env->mlx, WIN_WIDTH, WIN_HEIGHT);
 	threads(env);
-	mlx_put_image_to_window(env->mlx, env->win, env->image->img, 0, 0);
+
 	if (env->f == &julia_set)
 		display_info_maths(env);
 }

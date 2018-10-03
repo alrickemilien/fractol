@@ -22,21 +22,9 @@
 # include <math.h>
 # include <pthread.h>
 
-# define USAGE "Usage : ./fractol [--julia] [--mandelbrot] [--burninship]"
+# define USAGE "Usage : ./fractol [--julia] [--mandelbrot] [--burningship]"
 
-# ifdef __APPLE__
-# define WIN_WIDTH 1200
-# define WIN_HEIGHT 1200
-# define WIN_WIDTH_HALF 600
-# define WIN_HEIGHT_HALF 600
-#endif
-# ifdef __linux__
-# define WIN_HEIGHT 600
-# define WIN_WIDTH 600
-# define WIN_WIDTH_HALF 300
-# define WIN_HEIGHT_HALF 300
-# endif
-
+# define NUMBER_OF_THREADS 2
 
 /*
 * * MACROS to access more easily to x server pointeurs to variables
@@ -56,23 +44,14 @@
 #define DEFAULT_WINDOW_WIDTH 600
 #define DEFAULT_WINDOW_HEIGHT 600
 
+# define RE(x) x.re
+# define I(x) x.im
+
 typedef struct	s_z
 {
 	double	re;
 	double	im;
 }				t_z;
-
-typedef struct	s_image
-{
-	int			bpp;
-	int			size_line;
-	int			endian;
-	int			width;
-	int			height;
-	double		zoom;
-	void		*img;
-	char		*data;
-}				t_image;
 
 typedef struct	s_point
 {
@@ -110,15 +89,15 @@ typedef struct	s_software_environ
 
 	// FRACTOL SPEC SHITS
 	void		*(*f)(void *);
-	t_image		*image;
 	t_z			constante;
 	t_point		cursor;
 	t_dpoint	offset;
 	t_point		thread_origin;
-	int			max_iter;
+	int			max_iteration;
 	int			thread_index;
 	t_point		dimension_image;
 	int			command;
+	int			zoom;
 	int			shift;
 	int			lock;
 	t_point		center;
@@ -128,9 +107,9 @@ void	redraw(t_env *env);
 int		error(char *str);
 int		key_press(int keycode, void *param);
 int		mouse_motion_hook(int x, int y, void *param);
-void	put_pixel_to_image(t_image *image, int x, int y, t_color color);
+void	put_pixel_to_image(t_env *env, int x, int y, t_color color);
 t_color	split_color(unsigned long color);
-void	fill_image(t_image *image, int width, int height, t_color color);
+void	fill_image(t_env *env, int width, int height, t_color color);
 void	*julia_set(void *env);
 void	threads(t_env *env);
 void	*mandelbrot_set(void *env);
@@ -138,7 +117,7 @@ void	*third_set(void *env);
 int		key_release(int keycode, void *param);
 int		focus_in(int button, int x, int y, void *param);
 void	display_info_maths(t_env *env);
-void	ft_bitmap(t_image *image);
+void	ft_bitmap(t_env *env);
 void	ft_write_n_bytes(unsigned char *dest, unsigned char *src, int n);
 void	end_program(t_env *env);
 #endif

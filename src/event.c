@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fractol.h"
+#include "fractol.h"
 #include "macro_key_mlx.h"
 
 int			mouse_motion_hook(int x, int y, void *param)
@@ -18,14 +18,16 @@ int			mouse_motion_hook(int x, int y, void *param)
 	t_env	*env;
 
 	env = (t_env *)param;
+
 	if (!env->lock)
 	{
 		env->cursor.x = x;
 		env->cursor.x = y;
-		env->constante.re = (WIN_WIDTH_HALF - x) * 0.001 - 0.7;
-		env->constante.im = (WIN_HEIGHT_HALF - y) * 0.001 + 0.27015;
+		RE(env->constante) = (DEFAULT_WINDOW_WIDTH / 2 - x) * 0.001 - 0.7;
+		I(env->constante) = (DEFAULT_WINDOW_HEIGHT / 2 - y) * 0.001 + 0.27015;
 		redraw(env);
 	}
+
 	return (0);
 }
 
@@ -34,20 +36,21 @@ int			focus_in(int button, int x, int y, void *param)
 	t_env	*env;
 
 	env = (t_env*)param;
-	if (x > 0 && x < WIN_WIDTH && y > 0 && y < WIN_HEIGHT)
+
+	if (x > 0 && x < DEFAULT_WINDOW_WIDTH && y > 0 && y < DEFAULT_WINDOW_HEIGHT)
 	{
 		if (button == 5)
 		{
-			env->image->zoom += 0.1;
-			env->offset.x += -(WIN_WIDTH_HALF - x) * 0.0005 / env->image->zoom;
-			env->offset.y += -(WIN_HEIGHT_HALF - y) * 0.0005 / env->image->zoom;
+			env->zoom += 0.1;
+			env->offset.x += -(DEFAULT_WINDOW_WIDTH - x) * 0.0005 / env->zoom;
+			env->offset.y += -(DEFAULT_WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
 			redraw(env);
 		}
-		else if (button == 4 && env->image->zoom > 0.5)
+		else if (button == 4 && env->zoom > 0.5)
 		{
-			env->image->zoom -= 0.1;
-			env->offset.x -= (WIN_WIDTH_HALF - x) * 0.0005 / env->image->zoom;
-			env->offset.y -= (WIN_HEIGHT_HALF - y) * 0.0005 / env->image->zoom;
+			env->zoom -= 0.1;
+			env->offset.x -= (DEFAULT_WINDOW_WIDTH - x) * 0.0005 / env->zoom;
+			env->offset.y -= (DEFAULT_WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
 			redraw(env);
 		}
 		env->center.x = x;
@@ -59,13 +62,13 @@ int			focus_in(int button, int x, int y, void *param)
 static void	move_fractal(int keycode, void *env)
 {
 	if (keycode == KEY_DOWN)
-		((t_env*)env)->offset.y += 0.25 / ((t_env*)env)->image->zoom;
+		((t_env*)env)->offset.y += 0.25 / ((t_env*)env)->zoom;
 	if (keycode == KEY_UP)
-		((t_env*)env)->offset.y -= 0.25 / ((t_env*)env)->image->zoom;
+		((t_env*)env)->offset.y -= 0.25 / ((t_env*)env)->zoom;
 	if (keycode == KEY_RIGHT)
-		((t_env*)env)->offset.x -= 0.25 / ((t_env*)env)->image->zoom;
+		((t_env*)env)->offset.x -= 0.25 / ((t_env*)env)->zoom;
 	if (keycode == KEY_LEFT)
-		((t_env*)env)->offset.x += 0.25 / ((t_env*)env)->image->zoom;
+		((t_env*)env)->offset.x += 0.25 / ((t_env*)env)->zoom;
 }
 
 int			key_press(int keycode, void *env)
@@ -80,12 +83,14 @@ int			key_press(int keycode, void *env)
 		((t_env*)env)->command = 1;
 	move_fractal(keycode, env);
 	if (keycode == 1 && ((t_env*)env)->command)
-		ft_bitmap(((t_env*)env)->image);
-	if (keycode == KEY_PAD_ADD && ((t_env*)env)->max_iter < 500)
-		((t_env*)env)->max_iter += 5;
-	if (keycode == KEY_PAD_SUB && ((t_env*)env)->max_iter > 10)
-		((t_env*)env)->max_iter -= 5;
+		ft_bitmap((t_env*)env);
+	if (keycode == KEY_PAD_ADD && ((t_env*)env)->max_iteration < 500)
+		((t_env*)env)->max_iteration += 5;
+	if (keycode == KEY_PAD_SUB && ((t_env*)env)->max_iteration > 10)
+		((t_env*)env)->max_iteration -= 5;
+
 	redraw(env);
+
 	return (0);
 }
 
@@ -94,7 +99,9 @@ int			key_release(int keycode, void *param)
 	t_env	*env;
 
 	env = (t_env*)param;
+
 	if (keycode == KEY_COMMAND_LEFT || KEY_COMMAND_RIGHT)
 		env->command = 0;
+
 	return (0);
 }
