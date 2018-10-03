@@ -6,8 +6,6 @@ CCFLAGS= -O3 -Wall -Wextra -Werror
 
 LIBFT= -lft -L libft -I libft
 
-USAGE="Usage : ./fractol [--julia] [--mandelbrot] [--burninship]"
-
 LPTHREAD= -lpthread
 
 FRAMEWORK= -framework OpenGL -framework AppKit
@@ -16,17 +14,15 @@ INCLUDE=-I includes
 
 SRC= src/main.c \
 		src/event.c \
+		src/random_moves.c \
 		src/error.c \
-		src/split_color.c \
-		src/put_pixel_to_image.c\
 	  src/julia_set.c \
 		src/mandelbrot_set.c \
 		src/third_set.c  \
-	  src/redraw.c \
+	  src/render.c \
+		src/render_utils.c \
 		src/display_info_maths.c \
 		src/bmp.c\
-	  src/ft_write_n_bytes.c \
-		src/split_calcul.c \
 		src/end_program.c\
 
 OBJ=$(SRC:.c=.o)

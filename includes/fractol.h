@@ -21,25 +21,27 @@
 # include <stdlib.h>
 # include <math.h>
 # include <pthread.h>
+#include <time.h>
 
 # define USAGE "Usage : ./fractol [--julia] [--mandelbrot] [--burningship]"
 
-# define NUMBER_OF_THREADS 2
+# define NUMBER_OF_THREADS 1
 
 /*
-* * MACROS to access more easily to x server pointeurs to variables
-* * that will be always manipulated
-* * like x_server, window, image_buffer, etc
+** MACROS to access more easily to x server pointeurs to variables
+** that will be always manipulated
+** like x_server, window, image_buffer, etc
 */
-#define X_SERVER env->x_server
-#define WINDOW env->window
-#define IMAGE env->image
-#define IMAGE_BUFFER env->image_buffer
-#define WINDOW_WIDTH env->window_width
-#define WINDOW_HEIGHT env->window_height
-#define BPP env->bpp
-#define SIZE_LINE env->size_line
-#define ENDIAN env->endian
+
+# define X_SERVER env->x_server
+# define WINDOW env->window
+# define IMAGE env->image
+# define IMAGE_BUFFER env->image_buffer
+# define WINDOW_WIDTH env->window_width
+# define WINDOW_HEIGHT env->window_height
+# define BPP env->bpp
+# define SIZE_LINE env->size_line
+# define ENDIAN env->endian
 
 #define DEFAULT_WINDOW_WIDTH 600
 #define DEFAULT_WINDOW_HEIGHT 600
@@ -75,7 +77,7 @@ typedef struct s_color
 
 typedef struct	s_software_environ
 {
-	// X SERVER SHITS
+	// X SERVER THINGS
   void *x_server;
   void *window;
   void *image;
@@ -87,15 +89,13 @@ typedef struct	s_software_environ
 	int			size_line;
 	int			endian;
 
-	// FRACTOL SPEC SHITS
+	// FRACTOL SPEC THINGS
 	void		*(*f)(void *);
 	t_z			constante;
 	t_point		cursor;
 	t_dpoint	offset;
-	t_point		thread_origin;
 	int			max_iteration;
 	int			thread_index;
-	t_point		dimension_image;
 	int			command;
 	int			zoom;
 	int			shift;
@@ -103,8 +103,9 @@ typedef struct	s_software_environ
 	t_point		center;
 } t_env;
 
-void	redraw(t_env *env);
+void	render(t_env *env);
 int		error(char *str);
+int escape_program(int keycode, void *env);
 int		key_press(int keycode, void *param);
 int		mouse_motion_hook(int x, int y, void *param);
 void	put_pixel_to_image(t_env *env, int x, int y, t_color color);
@@ -120,4 +121,6 @@ void	display_info_maths(t_env *env);
 void	ft_bitmap(t_env *env);
 void	ft_write_n_bytes(unsigned char *dest, unsigned char *src, int n);
 void	end_program(t_env *env);
+
+int		random_moves(void *param);
 #endif

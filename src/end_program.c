@@ -15,7 +15,8 @@
 void	end_program(t_env *env)
 {
 	mlx_destroy_image(X_SERVER, IMAGE);
+
 	mlx_destroy_window(X_SERVER, WINDOW);
-	free(env);
+
 	exit(0);
 }

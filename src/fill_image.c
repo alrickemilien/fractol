@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-void	fill_image(t_image *image, int width, int height, t_color color)
+void	fill_image(t_env *env, int width, int height, t_color color)
 {
 	int		x;
 	int		y;
@@ -11,7 +11,7 @@ void	fill_image(t_image *image, int width, int height, t_color color)
 		x = 0;
 		while(x < width)
 		{
-			put_pixel_to_image(image, x, y, color);
+			put_pixel_to_image(env, x, y, color);
 			x++;
 		}
 		y++;

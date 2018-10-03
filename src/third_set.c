@@ -59,14 +59,13 @@ void			*third_set(void *void_env)
 	y = 0;
 	while (y < DEFAULT_WINDOW_HEIGHT)
 	{
-		x = env->thread_index * DEFAULT_WINDOW_WIDTH / 4;
-		while (x < env->thread_index * DEFAULT_WINDOW_WIDTH / 4 + DEFAULT_WINDOW_WIDTH / 4)
+		x = (DEFAULT_WINDOW_WIDTH / NUMBER_OF_THREADS) * env->thread_index;
+		while (x < (DEFAULT_WINDOW_WIDTH / NUMBER_OF_THREADS) * (env->thread_index + 1))
 		{
-			;
+			x = env->thread_index * DEFAULT_WINDOW_WIDTH / 4;
 			if (x < DEFAULT_WINDOW_WIDTH && y < DEFAULT_WINDOW_HEIGHT && x > 0 && y > 0)
 				put_pixel_to_image(IMAGE, x, y, split_color(
-					mlx_get_color_value(X_SERVER,
-						third_set_color(env, 0x000002AA, x, y))));
+					mlx_get_color_value(X_SERVER,	third_set_color(env, 0x000002AA, x, y))));
 			x++;
 		}
 		y++;

@@ -13,11 +13,12 @@
 #include "fractol.h"
 
 void initialize_key_events(t_env *env) {
-	mlx_hook(WINDOW, 2, 1L << 0 | 1 << 1, &key_press, env);
 	mlx_hook(WINDOW, 6, 1L << 6, &mouse_motion_hook, env);
 	mlx_hook(WINDOW, 3, 1L << 1, &key_release, env);
 	mlx_hook(WINDOW, 2, 1L << 0 | 1 << 1, &key_press, env);
 	mlx_hook(WINDOW, 4, 0L, &focus_in, env);
+	mlx_hook(WINDOW, 17, 0L, &escape_program, env);
+	mlx_loop_hook(X_SERVER, &random_moves, env);
 }
 
 void initilalize_x_server(t_env *env) {
@@ -41,10 +42,7 @@ void initilalize_program_values(t_env *env)
 	env->cursor.x = 0;
 	env->cursor.y = 0;
 
-	env->max_iteration = 250;
-
-	if (env->f == &third_set)
-		env->max_iteration = 200;
+	env->max_iteration = 50;
 
 	env->offset.x = 0;
 	env->offset.y = 0;
@@ -67,6 +65,8 @@ void	initialize_env(t_env *env)
 }
 
 void run(t_env *env) {
+	render(env);
+
 	mlx_loop(X_SERVER);
 }
 
@@ -89,12 +89,12 @@ int		main(int argc, char **argv)
 {
 	t_env	env;
 
+	srand ( time ( NULL));
+
 	if (!parse(&env, argc, argv))
 		error(USAGE);
 
 	initialize_env(&env);
-
-//	threads(&env);
 
 	if (env.f == &julia_set)
 		display_info_maths(&env);

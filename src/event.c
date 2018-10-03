@@ -23,9 +23,11 @@ int			mouse_motion_hook(int x, int y, void *param)
 	{
 		env->cursor.x = x;
 		env->cursor.x = y;
+
 		RE(env->constante) = (DEFAULT_WINDOW_WIDTH / 2 - x) * 0.001 - 0.7;
 		I(env->constante) = (DEFAULT_WINDOW_HEIGHT / 2 - y) * 0.001 + 0.27015;
-		redraw(env);
+
+		render(env);
 	}
 
 	return (0);
@@ -44,14 +46,14 @@ int			focus_in(int button, int x, int y, void *param)
 			env->zoom += 0.1;
 			env->offset.x += -(DEFAULT_WINDOW_WIDTH - x) * 0.0005 / env->zoom;
 			env->offset.y += -(DEFAULT_WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
-			redraw(env);
+			render(env);
 		}
 		else if (button == 4 && env->zoom > 0.5)
 		{
 			env->zoom -= 0.1;
 			env->offset.x -= (DEFAULT_WINDOW_WIDTH - x) * 0.0005 / env->zoom;
 			env->offset.y -= (DEFAULT_WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
-			redraw(env);
+			render(env);
 		}
 		env->center.x = x;
 		env->center.y = y;
@@ -89,7 +91,15 @@ int			key_press(int keycode, void *env)
 	if (keycode == KEY_PAD_SUB && ((t_env*)env)->max_iteration > 10)
 		((t_env*)env)->max_iteration -= 5;
 
-	redraw(env);
+	render(env);
+
+	return (0);
+}
+
+int escape_program(int keycode, void *env)
+{
+		(void)keycode;
+	end_program((t_env *)env);
 
 	return (0);
 }
