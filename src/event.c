@@ -24,8 +24,8 @@ int			mouse_motion_hook(int x, int y, void *param)
 		env->cursor.x = x;
 		env->cursor.x = y;
 
-		RE(env->constante) = (DEFAULT_WINDOW_WIDTH / 2 - x) * 0.001 - 0.7;
-		I(env->constante) = (DEFAULT_WINDOW_HEIGHT / 2 - y) * 0.001 + 0.27015;
+		RE(env->constante) = (WINDOW_WIDTH / 2 - x) * 0.001 - 0.7;
+		I(env->constante) = (WINDOW_HEIGHT / 2 - y) * 0.001 + 0.27015;
 
 		render(env);
 	}
@@ -39,20 +39,20 @@ int			focus_in(int button, int x, int y, void *param)
 
 	env = (t_env*)param;
 
-	if (x > 0 && x < DEFAULT_WINDOW_WIDTH && y > 0 && y < DEFAULT_WINDOW_HEIGHT)
+	if (x > 0 && x < WINDOW_WIDTH && y > 0 && y < WINDOW_HEIGHT)
 	{
 		if (button == 5)
 		{
 			env->zoom += 0.1;
-			env->offset.x += -(DEFAULT_WINDOW_WIDTH - x) * 0.0005 / env->zoom;
-			env->offset.y += -(DEFAULT_WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
+			env->offset.x += -(WINDOW_WIDTH - x) * 0.0005 / env->zoom;
+			env->offset.y += -(WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
 			render(env);
 		}
 		else if (button == 4 && env->zoom > 0.5)
 		{
 			env->zoom -= 0.1;
-			env->offset.x -= (DEFAULT_WINDOW_WIDTH - x) * 0.0005 / env->zoom;
-			env->offset.y -= (DEFAULT_WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
+			env->offset.x -= (WINDOW_WIDTH - x) * 0.0005 / env->zoom;
+			env->offset.y -= (WINDOW_HEIGHT - y) * 0.0005 / env->zoom;
 			render(env);
 		}
 		env->center.x = x;

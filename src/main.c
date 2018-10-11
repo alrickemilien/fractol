@@ -25,12 +25,13 @@ void initilalize_x_server(t_env *env) {
 	WINDOW_WIDTH = DEFAULT_WINDOW_WIDTH;
 	WINDOW_HEIGHT = DEFAULT_WINDOW_HEIGHT;
 
+	if (!(THREADS = (pthread_t*)malloc(sizeof(pthread_t) * NUMBER_OF_THREADS)))
+		error("error malloc in threads");
+
 	X_SERVER = mlx_init();
 	WINDOW = mlx_new_window(X_SERVER, WINDOW_WIDTH, WINDOW_HEIGHT, "FRACTOL");
 	IMAGE = mlx_new_image(X_SERVER, WINDOW_WIDTH, WINDOW_HEIGHT);
 	IMAGE_BUFFER = mlx_get_data_addr(IMAGE, &BPP, &SIZE_LINE, &ENDIAN);
-
-	mlx_put_image_to_window(X_SERVER, WINDOW, IMAGE, 0, 0);
 
 	initialize_key_events(env);
 }
@@ -52,9 +53,9 @@ void initilalize_program_values(t_env *env)
 
 	env->zoom = 1;
 
-	env->center.x = DEFAULT_WINDOW_WIDTH / 2;
+	env->center.x = WINDOW_WIDTH / 2;
 
-	env->center.y = DEFAULT_WINDOW_HEIGHT / 2;
+	env->center.y = WINDOW_WIDTH / 2;
 }
 
 void	initialize_env(t_env *env)
@@ -89,7 +90,7 @@ int		main(int argc, char **argv)
 {
 	t_env	env;
 
-	srand ( time ( NULL));
+	srand(time(NULL));
 
 	if (!parse(&env, argc, argv))
 		error(USAGE);

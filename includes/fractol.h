@@ -21,11 +21,13 @@
 # include <stdlib.h>
 # include <math.h>
 # include <pthread.h>
-#include <time.h>
+# include <time.h>
+# include <stdio.h>
+
 
 # define USAGE "Usage : ./fractol [--julia] [--mandelbrot] [--burningship]"
 
-# define NUMBER_OF_THREADS 1
+# define NUMBER_OF_THREADS 4
 
 /*
 ** MACROS to access more easily to x server pointeurs to variables
@@ -42,6 +44,7 @@
 # define BPP env->bpp
 # define SIZE_LINE env->size_line
 # define ENDIAN env->endian
+# define THREADS env->threads
 
 #define DEFAULT_WINDOW_WIDTH 600
 #define DEFAULT_WINDOW_HEIGHT 600
@@ -100,6 +103,7 @@ typedef struct	s_software_environ
 	int			zoom;
 	int			shift;
 	int			lock;
+	pthread_t	*threads;
 	t_point		center;
 } t_env;
 

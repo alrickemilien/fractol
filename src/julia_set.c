@@ -52,12 +52,11 @@ void		*julia_set(void *void_env)
 
 	env = (t_env*)void_env;
 	y = 0;
-	while (y < DEFAULT_WINDOW_HEIGHT)
+	while (y < WINDOW_HEIGHT)
 	{
-		x = (DEFAULT_WINDOW_WIDTH / NUMBER_OF_THREADS) * env->thread_index;
-		while (x < (DEFAULT_WINDOW_WIDTH / NUMBER_OF_THREADS) * (env->thread_index + 1))
+		x = (WINDOW_WIDTH / NUMBER_OF_THREADS) * env->thread_index;
+		while (x < (WINDOW_WIDTH / NUMBER_OF_THREADS) * (env->thread_index + 1))
 		{
-			if (x < DEFAULT_WINDOW_WIDTH && y < DEFAULT_WINDOW_HEIGHT && x > 0 && y > 0)
 				put_pixel_to_image(env, x, y,
 
 				split_color(mlx_get_color_value(X_SERVER, julia_iter(env, 0x00FFFFFF, x, y))));

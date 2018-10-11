@@ -18,5 +18,7 @@ void	end_program(t_env *env)
 
 	mlx_destroy_window(X_SERVER, WINDOW);
 
+	free(THREADS);
+
 	exit(0);
 }
